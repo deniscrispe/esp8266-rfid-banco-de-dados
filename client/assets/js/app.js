@@ -4,12 +4,13 @@ const endpoints = {
   users: `${apiPath}/users`,
   tags: `${apiPath}/tags`,
   logs: `${apiPath}/logs`,
+  classrooms: `${apiPath}/classrooms`
 };
 
 const mqttConfig = {
-  broker: 'broker.iot-br.com',
-  topic: '/empresas/douglaszuqueto/catraca/entrada/ping',
-  port: 8083
+  broker: 'broker.hivemq.com',
+  topic: '/smartaccess/denis/catraca/entrada/ping',
+  port: 8000
 };
 
 const http = axios.create({

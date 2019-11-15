@@ -5,8 +5,7 @@ const express = require('express')
 router
   .get('/', controller.index)
   .get('/:id', controller.show)
-  .get('/tag/:tag', controller.searchByTag)
-  .get('/authorize/:tag', controller.authorizeTag)
+  .get('/tag/:id', controller.searchByTag)
   .post('/', controller.create)
   .put('/:id', controller.update)
   .delete('/:id', controller.remove);

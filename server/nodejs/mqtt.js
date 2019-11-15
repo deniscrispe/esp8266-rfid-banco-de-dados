@@ -2,26 +2,32 @@ const mqtt = require('mqtt')
   , request = require('request-promise')
   , config = require('./config/config');
 
-const client = mqtt.connect(`mqtt://${config.broker.host}`);
-
-const rfidPingTopic = '/empresas/douglaszuqueto/catraca/entrada/ping';
-const rfidPongTopic = '/empresas/douglaszuqueto/catraca/entrada/pong';
-
-client.on('connect', () => {
-  console.log(`Connection successfully to ${config.broker.host}`);
-  client.subscribe(rfidPingTopic);
-});
+const client = mqtt.connect("mqtt://broker.hivemq.com");
+const rfidPingTopic = '/smartaccess/denis/catraca/entrada/ping';
+const rfidPongTopic = '/smartaccess/denis/catraca/entrada/pong';
 
 client.on('message', (topic, message) => {
-  if (rfidPingTopic !== topic) return;
-
+  if (rfidPingTopic !== topic) return;  
   const tag = message.toString();
-
+  console.log(tag);
   authorizeRfid(topic, tag);
 });
 
+client.on('connect', () => {
+  console.log(`Connection successfully to ${config.broker.host}`);
+  client.subscribe(rfidPingTopic,{qos:1});
+});
+
+//handle errors
+client.on('error',(error) => {
+  console.log("Can't connect" + error);
+  process.exit(1)
+});
+
 const authorizeRfid = (topic, tag) => {
-  request(`${config.api.endpoints.tags}tag/${tag}`)
+  console.log("AA");
+  console.log(tag);
+  request(`${config.api.endpoints.tags}authorize/${tag}`)
     .then((data) => JSON.parse(data))
     .then((result) => formatPayload(result))
     .then((payload) => createLog(payload))
@@ -34,8 +40,7 @@ const formatPayload = (result) => {
     'data': result,
     'status': 0,
   };
-
-  if (!result.tag || result.state === 0) {
+  if (!result.id_tag || result.state === 0) {
     return payload;
   }
   payload.status = 1;
@@ -43,11 +48,13 @@ const formatPayload = (result) => {
 };
 
 const createLog = (payload) => {
-  if (!payload.data.tag) return payload.status;
+  if (!payload.data.id_tag) return payload.status;
+
+  console.log(payload);
 
   const log = {
     id_user: payload.data.id_user,
-    id_tag: payload.data.id,
+    id_tag: payload.data.id_tag,
     status: payload.status
   };
 

@@ -18,4 +18,7 @@ router.use('/tags', require('./tags/route'));
 /* log routes */
 router.use('/logs', require('./logs/route'));
 
+/* classroom routes */
+router.use('/classrooms', require('./classrooms/route'))
+
 module.exports = router;

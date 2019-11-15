@@ -2,22 +2,18 @@
 <html lang="pt_br">
 <head>
   <meta charset="UTF-8">
-  <link rel="shortcut icon" type="image/x-icon" href="https://douglaszuqueto.com/images/favicon.ico">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>RFID - Douglas Zuqueto</title>
+  <title>RFID</title>
   <link rel="stylesheet" href="./assets/css/app.css">
   <link rel="stylesheet" href="./assets/css/bulma.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
+<body onload="carregaTela()">
 <div class="container">
   <nav class="nav">
     <div class="nav-left">
-      <a class="nav-item is-brand" href="./index.html">
-        <img src="https://douglaszuqueto.com/images/logo_2.png" alt="RFID - Controle de Acesso">
-      </a>
       <a class="nav-item is-tab" href="./index.html">
         <span class="icon is-medium"><i class="fa fa-home"></i></span>
         <span>Home</span>
@@ -40,18 +36,6 @@
             <span></span>
             <span></span>
         </span>
-
-    <div id="nav-menu" class="nav-right nav-menu">
-      <div class="nav-item">
-        <a class="nav-item" target="_blank"
-           href="https://github.com/douglaszuqueto/esp8266-rfid-banco-de-dados">
-                  <span class="icon is-medium">
-                    <i class="fa fa-github"></i>
-                  </span>
-          <span>Github</span>
-        </a>
-      </div>
-    </div>
   </nav>
 
 </div>
@@ -61,7 +45,7 @@
   <div class="columns">
     <div class="column is-10 is-offset-1">
       <p>
-        <a class="button is-success modal-button is-pulled-right" data-target="#modal-ter">
+        <a class="button is-success modal-button is-pulled-right new-tag" data-target="#modal-ter">
           <span>Cadastrar</span>
           <span class="icon"><i class="fa fa-plus"></i></span>
         </a>
@@ -90,7 +74,7 @@
   </div>
 
   <!-- Modal de Cadastro -->
-  <div id="modal-ter" class="modal">
+  <div id="modal-ter" class="modal" >
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
@@ -110,12 +94,30 @@
               </p>
             </div>
             <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <select class="input" name="usuarios" id="usuarios" required onchange="disabledWrite()">
+                    <option disabled selected value>Usuário</option>
+                </select>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-hashtag"></i>
+                </span>                                
+              </p>
+            </div>
+            <div class="field" id="salas">                  
+                 
+            </div>
+            <div class="field">
               <p class="control">
                 <label class="checkbox">
                   Ativo?
                   <input type="checkbox" name="state" id="state" value="0">
                   </a>
                 </label>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <a class="button is-success write-tag" id="writeTag" disabled="true" >Escrever na tag</a>
               </p>
             </div>
           </div>
@@ -130,16 +132,7 @@
   </div>
 </main>
 <footer>
-  <div class="">
-    <div class="has-text-centered">
-      <a href="https://douglaszuqueto.com" target="_blank">
-        <img src="https://douglaszuqueto.com/images/logo_2.png" alt="" width="5%">
-      </a>
-      <p>
-        <a href="https://douglaszuqueto.com" target="_blank">2017 - Douglas Zuqueto</a>
-      </p>
-    </div>
-  </div>
+  
 </footer>
 <script src="./assets/js/axios.min.js"></script>
 <script src="./assets/js/mqttws31.min.js"></script>

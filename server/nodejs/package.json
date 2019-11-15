@@ -27,11 +27,14 @@
     "dev": "nodemon index"
   },
   "dependencies": {
-    "body-parser": "^1.17.2",
+    "assert": "^2.0.0",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.3",
+    "crypto": "^1.0.1",
+    "crypto-js": "^3.1.9-1",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
-    "mqtt": "^2.8.0",
+    "mqtt-packet": "^6.0.0",
     "mysql": "^2.13.0",
     "promise": "^7.1.1",
     "request": "^2.81.0",

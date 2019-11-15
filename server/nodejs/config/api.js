@@ -4,7 +4,8 @@ module.exports = {
   endpoints: {
     'users': `${basePath}users/`,
     'tags': `${basePath}tags/`,
-    'log': `${basePath}logs/`
+    'log': `${basePath}logs/`,
+	  'classrooms': `${basePath}classrooms/`
   }
 }
 ;

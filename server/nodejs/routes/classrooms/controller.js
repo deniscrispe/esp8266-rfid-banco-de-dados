@@ -1,4 +1,4 @@
-const model = require('../../models/tags');
+const model = require('../../models/classrooms');
 
 const index = (req, res) => {
   return model.all()
@@ -9,30 +9,6 @@ const index = (req, res) => {
 const show = (req, res) => {
   return model.find(req.params.id)
     .then((data) => res.json(data[0]))
-    .catch((err) => res.json(err))
-};
-
-const searchByTag = (req, res) => {
-  return model.searchByTag(req.params.tag)
-    .then((data) => {
-      const tag = data[0];
-
-      if (!tag) res.json({});
-
-      res.json(tag);
-    })
-    .catch((err) => res.json(err))
-};
-
-const authorizeTag = (req, res) => {
-  return model.authorizeTag(req.params.tag)
-    .then((data) => {
-      const tag = data[0];
-
-      if (!tag) res.json({});
-
-      res.json(tag);
-    })
     .catch((err) => res.json(err))
 };
 
@@ -54,11 +30,16 @@ const remove = (req, res) => {
     .catch((err) => res.json(err));
 };
 
+const searchByTag = (req, res) => {
+  return model.searchByTag(req.params.id)
+  .then((data) => res.json(data))
+  .catch((err) => res.json(err))
+};
+
 module.exports = {
   index: index,
   show: show,
   searchByTag: searchByTag,
-  authorizeTag : authorizeTag,
   create: create,
   update: update,
   remove: remove

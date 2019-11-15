@@ -8,6 +8,7 @@ CREATE TABLE `access_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_user` int(10) unsigned DEFAULT NULL,
   `id_tag` int(10) unsigned DEFAULT NULL,
+  `id_classroom` int(10) unsigned DEFAULT NULL,
   `status` smallint(6) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -15,8 +16,10 @@ CREATE TABLE `access_log` (
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `id_user` (`id_user`),
   KEY `id_tag` (`id_tag`),
+  KEY `id_classroom` (`id_classroom`),
   CONSTRAINT `access_log_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `access_log_ibfk_2` FOREIGN KEY (`id_tag`) REFERENCES `tags` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `access_log_ibfk_2` FOREIGN KEY (`id_tag`) REFERENCES `tags` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `access_log_ibfk_3` FOREIGN KEY (`id_classroom`) REFERENCES `classroom` (`id`) ON UPDATE CASCADE  
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -53,7 +56,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
+  `matricula` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -65,3 +68,30 @@ CREATE TABLE `users` (
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', 'Douglas Zuqueto', 'douglas.zuqueto@gmail.com', '2017-06-03 08:58:18', '2017-06-03 08:58:18');
 SET FOREIGN_KEY_CHECKS=1;
+
+
+-------------
+
+DROP TABLE IF EXISTS `classroom`;
+CREATE TABLE `classroom` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `access_class`;
+CREATE TABLE `access_class` (
+  `id_tag` int(10) unsigned,
+  `id_classroom` int(10) unsigned,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_tag`,`id_classroom`),
+  UNIQUE KEY `id` (`id_tag`,`id_classroom`) USING BTREE,
+  KEY `id_tag` (`id_tag`),
+  KEY `id_classroom` (`id_classroom`),
+  CONSTRAINT `access_class_ibfk_1` FOREIGN KEY (`id_tag`) REFERENCES `tags` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `access_class_ibfk_2` FOREIGN KEY (`id_classroom`) REFERENCES `classroom` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;

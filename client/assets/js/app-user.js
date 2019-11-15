@@ -1,6 +1,6 @@
 const usersTable = document.getElementById('users-table');
 const nameInput = $('#name');
-const emailInput = $('#email');
+const matriculaInput = $('#matricula');
 const idInput = $('#id');
 
 const Users = {
@@ -31,7 +31,7 @@ const updateUsersTable = () => {
         table += `<tr>`;
         table += `<td>${user.id}</td>`;
         table += `<td>${user.name}</td>`;
-        table += `<td>${user.email}</td>`;
+        table += `<td>${user.matricula}</td>`;
         table += `<td class="has-text-centered edit" data-id="${user.id}"><span class="icon"><i class="fa fa-edit"></i></span></td>`;
         table += `<td class="has-text-centered remove" data-id="${user.id}"><span class="icon"><i class="fa fa-trash-o"></i></span></td>`;
         table += `</tr>`;
@@ -44,7 +44,7 @@ const updateUsersTable = () => {
 const resetForm = () => {
   idInput.val('');
   nameInput.val('');
-  emailInput.val('');
+  matriculaInput.val('');
 
   updateUsersTable();
 
@@ -57,7 +57,7 @@ const createOrUpdateUser = () => {
 
   const data = {
     name: nameInput.val(),
-    email: emailInput.val()
+    matricula: matriculaInput.val()
   };
 
   if (id) {
@@ -104,7 +104,7 @@ $(document).ready(() => {
       .then((user) => {
         idInput.val(user.id);
         nameInput.val(user.name);
-        emailInput.val(user.email);
+        matriculaInput.val(user.matricula);
 
         $('html').addClass('is-clipped');
         $(target).addClass('is-active');
