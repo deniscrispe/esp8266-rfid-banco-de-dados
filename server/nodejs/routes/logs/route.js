@@ -3,7 +3,7 @@ const express = require('express')
   , controller = require('./controller');
 
 router
-  .get('/filtro/:data', controller.filtro)
+  .post('/filtro/', controller.filtro)
   .get('/', controller.index)
   .get('/:id', controller.show)
   .post('/', controller.create)

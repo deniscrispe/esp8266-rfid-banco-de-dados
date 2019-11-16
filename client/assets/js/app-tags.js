@@ -147,14 +147,6 @@ const createOrUpdate = () => {
     salas: getSalas(),
     state: stateChebox.is(':checked') ? 1 : 0
   };
-
-  console.log(data);
-  console.log(id);
-  if (id) {
-    console.log("Tem ID");
-  }else{
-    console.log("Não tem");
-  }
   
   if (id) {
     return Tags.update(id, data)

@@ -21,7 +21,7 @@ const Logs = {
     return http.delete(`${endpoints.logs}/${id}`);
   },
   filtro: (filtro) => {
-    return http.get(`${endpoints.logs}/filtro/${filtro}`);
+    return http.post(`${endpoints.logs}/filtro/`,filtro);
   }
 };
 
@@ -122,28 +122,16 @@ function formataData(data){
 
 const filtroTable = () => {
 
-  let filtro = '';
-
-  if(usuarioSelect.val()){
-    filtro += usuarioSelect.val();
-  }
-
-  filtro += '@'
-
-  if(salasSelect.val()){
-    filtro += salasSelect.val();
-  }
-
-  filtro += '@'
-
-  if(dataFiltro.val()){
-    let aux = formataData(dataFiltro.val());
-    filtro += aux[0];
-    filtro += '@'
-    filtro += aux[1];
-  }
-
-  Logs.filtro(filtro)
+  let aux = formataData(dataFiltro.val());
+  
+  const data = {
+    user: usuarioSelect.val(),
+    classroom: salasSelect.val(),
+    start: aux[0],
+    end: aux[1]
+  };
+  
+  Logs.filtro(data)
     .then((logs) => logs.data)
     .then((logs) => {
       let table = '';

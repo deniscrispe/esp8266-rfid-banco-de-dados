@@ -9,8 +9,6 @@ const all = () => {
   return db.query(`SELECT l.id as id, u.name as usuario, t.tag as tag,  c.name as sala, DATE_FORMAT(l.created_at," %d/%m/%Y") as data, DATE_FORMAT(l.created_at, "%H:%i:%s") as hora   
           FROM  ${table} l INNER JOIN ${users} u  on l.id_user=u.id INNER JOIN ${tags} t on l.id_tag=t.id 
           INNER JOIN ${classroom} c on l.id_classroom=c.id`);
-  
-  //return db.all(table);
 };
 
 const find = (id) => {
@@ -27,19 +25,11 @@ const remove = (id) => {
   return db.remove(table, id);
 };
 
-const filtro = (filtro) => {
+const filtro = (data) => {
+
   let query = `SELECT l.id as id, u.name as usuario, t.tag as tag,  c.name as sala, DATE_FORMAT(l.created_at," %d/%m/%Y") as data, DATE_FORMAT(l.created_at, "%H:%i:%s") as hora   
   FROM  ${table} l INNER JOIN ${users} u  on l.id_user=u.id INNER JOIN ${tags} t on l.id_tag=t.id 
   INNER JOIN ${classroom} c on l.id_classroom=c.id WHERE 1=1 `;
-  
-  var x = filtro.trim().split("@");
-
-  const data = {
-    'user': x[0],
-    'classroom': x[1],
-    'start': x[2],
-    'end': x[3],
-  };
 
   if(data.user){
     query += `and u.id = ${data.user} `;
@@ -48,13 +38,12 @@ const filtro = (filtro) => {
   if(data.classroom){
     query += `and c.id = ${data.classroom} `;
   }
-
   
   if(data.start && data.end){
     query += `and date(l.created_at) between '${data.start}'
     AND '${data.end}'`;
   }
-  
+
   return db.query(query);
 }
 
