@@ -18,10 +18,12 @@ const updateTable = () => {
       logs.forEach((log) => {
         table += `<tr>`;
         table += `<td>${log.id}</td>`;
-        table += `<td>${log.id_user}</td>`;
-        table += `<td>${log.id_tag}</td>`;
-        table += `<td>${log.status}</td>`;
-        table += `<td class="has-text-centered remove" data-id="${log.id}"><span class="icon"><i class="fa fa-trash-o"></i></span></td>`;
+        table += `<td>${log.usuario}</td>`;
+        table += `<td>${log.tag}</td>`;
+        table += `<td>${log.sala}</td>`;
+        table += `<td>${log.data}</td>`;
+        table += `<td>${log.hora}</td>`;
+        //table += `<td class="has-text-centered remove" data-id="${log.id}"><span class="icon"><i class="fa fa-trash-o"></i></span></td>`;
         table += `</tr>`;
       });
       logsTable.innerHTML = table;

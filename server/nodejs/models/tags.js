@@ -29,7 +29,7 @@ const authorizeTag = (data) => {
     'matricula': descript(x[2])
   };
 
-  return db.query(`SELECT t.id as id_tag, u.id as id_user, t.state FROM ${table} t INNER JOIN ${users} u on t.id_user = u.id
+  return db.query(`SELECT t.id as id_tag, u.id as id_user, ${req.class} as id_classroom, t.state FROM ${table} t INNER JOIN ${users} u on t.id_user = u.id
             WHERE t.tag = '${req.tag}' and u.matricula ='${req.matricula}' 
                 and ${req.class} in (SELECT a.id_classroom FROM ${acess} a 
                             WHERE a.id_tag=t.id)`)
