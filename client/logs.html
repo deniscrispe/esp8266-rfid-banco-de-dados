@@ -46,14 +46,61 @@
 <main class="container">
   <div class="columns">
     <div class="column is-10 is-offset-1">
-      <h3>Logs</h3>
 
+      <h3>Logs</h3>
       <div class="notification hidden" id="alert">
         <button class="delete"></button>
         <span class="message-text"></span>
       </div>
+      <br>
+      <div class="filtro">
+        <div class="field campoFiltro">
+          <p class="control has-icons-left has-icons-right">
+            <select class="input" name="usuarios" id="usuarios">
+                <option disabled selected value>Usuário</option>
+            </select>
+            <span class="icon is-small is-left">
+                <i class="fa fa-hashtag"></i>
+            </span>                                
+          </p>
+        </div>
 
-      <table class="table">
+        <div class="field campoFiltro">
+          <p class="control has-icons-left has-icons-right">
+            <select class="input" name="salas" id="salas">
+                <option disabled selected value>Sala</option>
+            </select>
+            <span class="icon is-small is-left">
+                <i class="fa fa-home"></i>
+            </span>                                
+          </p>
+        </div>
+
+        <div class="field campoFiltro">
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" id="daterange" name="daterange" placeholder="Data" style="width: 251px;">
+            <span class="icon is-small is-left">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </p>
+        </div>
+
+        <div class="field campoFiltro">
+          <p class="control">
+            <a class="button is-success filtrarLog" id="Filtrar" >Filtrar</a>
+          </p>
+        </div>
+
+        <div class="field campoFiltro">
+          <p class="control">
+            <a class="button limparFiltro" id="limparFiltro">Limpar</a>
+          </p>
+        </div>
+        
+
+      </div>
+
+      <table class="table" id="tabela_log">
         <thead>
         <tr>
           <th>ID</th>
@@ -64,6 +111,14 @@
           <th>Hora</th>
           <!--<th style="text-align: center">#</th>-->
         </tr>
+        <!--<tr>
+          <th></th>
+          <th><input class="input" type="text" id="txtColuna1"/></th>
+          <th><input class="input" type="text" id="txtColuna2"/></th>
+          <th><input class="input" type="text" id="txtColuna3"/></th>
+          <th></th>
+          <th></th>
+        </tr>-->
         </thead>
         <tbody id="logs-table"></tbody>
       </table>
@@ -79,6 +134,46 @@
 <script src="./assets/js/init-bulma.js"></script>
 <script src="./assets/js/app.js"></script>
 <script src="./assets/js/app-logs.js"></script>
+<!--
+<script>
+$(function(){
+  $("#tabela_log input").keyup(function(){       
+      var index = $(this).parent().index();
+      var nth = "#tabela_log td:nth-child("+(index+1).toString()+")";
+      var valor = $(this).val().toUpperCase();
+      $("#tabela_log tbody tr").show();
+      $(nth).each(function(){
+          if($(this).text().toUpperCase().indexOf(valor) < 0){
+              $(this).parent().hide();
+          }
+      });
+  });
+
+  $("#tabela_log input").blur(function(){
+      $(this).val("");
+  });
+});
+</script>-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script>
+    $(function() {
+      $('input[name="daterange"]').daterangepicker({
+        opens: 'left',
+        //autoUpdateInput: false,
+        startDate: "01/01/2019",
+        endDate: moment(),
+        locale: {
+          format: 'DD/MM/YYYY'
+        }
+      }, function(start, end, label) {
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      });
+    });
+</script>
 
 </body>
 </html>

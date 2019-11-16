@@ -1,3 +1,13 @@
 .hidden {
   display: none;
 }
+
+.filtro {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.campoFiltro{
+  margin-right: 15px;
+}

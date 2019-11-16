@@ -28,10 +28,18 @@ const remove = (req, res) => {
     .catch((err) => res.json(err));
 };
 
+const filtro = (req, res) => {
+  return model.filtro(req.params.data)
+    .then((data) => res.json(data))
+    .catch((err) => res.json(err));
+};
+
+
 module.exports = {
   index: index,
   show: show,
   create: create,
   update: update,
-  remove: remove
+  remove: remove,
+  filtro: filtro
 };
